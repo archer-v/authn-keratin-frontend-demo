@@ -26,9 +26,9 @@ Then try to login, signup, logout and so on.
 ![Screenshot from 2021-10-08 18-09-05](https://user-images.githubusercontent.com/41936843/136565112-1fc8700d-d87d-4a41-94c5-fa732977dc34.png)
 
 
-## Inconvenience 
+## Сlarification 
 
-Keratin only does the authorization things and control the auth data. It allows to create accounts, login, logout, store sessions, process password recovery workflows and so on, but it doesn't serve user-profiles. All you have at the client's side is the session key which is linked to the user record inside the Keratin storage. Therefore, you need you own backend software to work with user profiles data (like names, photos, etc). 
+Keratin only does the authorization things and controls the auth data. It provides the ability to create accounts, login, logout, store sessions, process password recovery workflows and so on, but it doesn't serve user-profiles. All you have at the client's side is the session key which is linked to the user record inside the Keratin storage. Therefore, you need you own backend software to work with user profiles data (like names, photos, etc). 
 
 And as a result, after login or session restoring after page reloads in this demo you won't see the user names which belong to the session. All you see is the session control buttons Login, Signup or Logout depends on the session state you are (logged in, or not)
 
@@ -45,7 +45,7 @@ It's default configuration with some startup logic. Edit .env file
 ### OAuth and social networks:
 
 If you want to try Google or Facebook authorization, you should host this app at a public domain with https. You can edit nginx configuration file `authn-nginx.conf` to add SSL support and public domain name, then just restart the containers.  
-Also, don't forget to edit .env and definve GOOGLE_OAUTH_CREDENTIALS variable (go to Google Cloud Console in OAuth section to get the credentials). For example, if you host this app at the domain `exmaple.com`, you should define these variables in .env file: `AUTHN_URL=https://example.com/authn` and `APP_DOMAINS=example.com`
+Also, don't forget to edit .env and define GOOGLE_OAUTH_CREDENTIALS (or another social network) variable (go to Google Cloud Console in OAuth section to get the credentials). For example, if you host this app at the domain `exmaple.com`, you should define these variables in .env file: `AUTHN_URL=https://example.com/authn` and `APP_DOMAINS=example.com`
 
 #### CP
 
