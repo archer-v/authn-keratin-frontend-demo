@@ -1,0 +1,46 @@
+# docker-compose build
+version: '2.1'
+services:
+  db:
+    image: mysql:5.7
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=authn
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+        timeout: 5s
+        retries: 10
+
+  redis:
+    image: redis
+
+  authn:
+    image: keratin/authn-server:1.11.0
+    entrypoint: ["sh", "-c", "./authn migrate && ./authn server"]
+    ports:
+      - "8765:3000"
+    environment:
+      - DATABASE_URL=mysql://root@db:3306/authn
+      - REDIS_URL=redis://redis:6379/0
+      - AUTHN_URL=${AUTHN_URL}
+      - APP_DOMAINS=${APP_DOMAINS}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - HTTP_AUTH_USERNAME=admin
+      - HTTP_AUTH_PASSWORD=keratin
+      - GOOGLE_OAUTH_CREDENTIALS=${GOOGLE_OAUTH_CREDENTIALS}
+    depends_on:
+       db:
+          condition: service_healthy
+
+  nginx:
+    image: nginx
+    ports:
+      - "4000:80"
+    volumes:
+      - ./www:/usr/share/nginx/html:ro
+      - ./authn-nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - authn

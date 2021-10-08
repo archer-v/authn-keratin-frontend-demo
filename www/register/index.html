@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/keratin-authn/dist/keratin-authn.min.js"></script>
+</head>
+<body>
+    <!-- landing page for oauth (we get here after success or failed auth at social networks (google, facebook, etc) -->
+    <script type="text/javascript">
+        window.addEventListener('load', function() {
+            KeratinAuthN.setHost("/authn/");
+            KeratinAuthN.setCookieStore("authn");
+            KeratinAuthN.importSession().then(
+                async function () {
+                    let sessionId = await KeratinAuthN.session();
+                    console.log(`Successfully signed up, tokenId: ${sessionId}`);
+                    window.location.href = '/';
+                },
+                function () {
+                    console.log("no session");
+                }
+            );
+        });
+    </script>
+</body>
+</html>
