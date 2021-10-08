@@ -32,20 +32,27 @@ Keratin only does the authorization things and controls the auth data. It provid
 
 And as a result, after login or session restoring after page reloads in this demo you won't see the user names which belong to the session. All you see is the session control buttons Login, Signup or Logout depends on the session state you are (logged in, or not)
 
-### Some expanation about docker:
+### Some expanation
 
-docker-compose.yml file describe 4 docker containers: 
+See the [login-register.js](/www/assets/js/login-register.js) to explore all base auth implementations
+
+#### docker
+
+docker-compose.yml file describes startup configuration for 4 containers: 
 * mysql as persistent storage that Keratin uses for storing user accounts
 * redis as storage for sessions
 * keratin server
 * nginx server to server demo web application
 
-It's default configuration with some startup logic. Edit .env file
-
-### OAuth and social networks:
+#### OAuth and social networks:
 
 If you want to try Google or Facebook authorization, you should host this app at a public domain with https. You can edit nginx configuration file `authn-nginx.conf` to add SSL support and public domain name, then just restart the containers.  
-Also, don't forget to edit .env and define GOOGLE_OAUTH_CREDENTIALS (or another social network) variable (go to Google Cloud Console in OAuth section to get the credentials). For example, if you host this app at the domain `exmaple.com`, you should define these variables in .env file: `AUTHN_URL=https://example.com/authn` and `APP_DOMAINS=example.com`
+Also, don't forget to edit .env and define GOOGLE_OAUTH_CREDENTIALS (or another social network) variable (go to Google Cloud Console in OAuth section to get the credentials). 
+
+For example, if you host this app at the domain `example.com`, you should: 
+* define variables in .env file: `AUTHN_URL=https://example.com/authn` and `APP_DOMAINS=example.com`
+* edit `authn-nginx.conf` changing `server_name localhost;` to `server_name exmaple.com;`
+* add some SSL options to authn-nginx.conf
 
 #### CP
 
