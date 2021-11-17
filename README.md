@@ -28,9 +28,7 @@ Then try to login, signup, logout and so on.
 
 ## Сlarification 
 
-Keratin only does the authorization things and controls the auth data. It provides the ability to create accounts, login, logout, store sessions, process password recovery workflows and so on, but it doesn't serve user-profiles. All you have at the client's side is the session key which is linked to the user record inside the Keratin storage. Therefore, you need you own backend software to work with user profiles data (like names, photos, etc). 
-
-And as a result, after login or session restoring after page reloads in this demo you won't see the user names which belong to the session. All you see is the session control buttons Login, Signup or Logout depends on the session state you are (logged in, or not)
+Keratin only does the authorization things and controls the auth data. It provides the ability to create accounts, login, logout, store sessions, process password recovery workflows and so on, but it doesn't serve user-profiles. All you have at the client's side is the session key which is linked to the user record inside the Keratin storage. Therefore, you need you own backend software to work with user profiles data (like names, photos, etc). So, after login or session restoring you won't see the user names which belong to the session. All you see is the session control buttons Login, Signup or Logout depends on the session state you are (logged in, or not)
 
 ### Some expanation
 
@@ -42,7 +40,7 @@ docker-compose.yml file describes startup configuration for 4 containers:
 * mysql as persistent storage that Keratin uses for storing user accounts
 * redis as storage for sessions
 * keratin server
-* nginx server to server demo web application
+* nginx server to serve demo web application
 
 #### OAuth and social networks:
 
